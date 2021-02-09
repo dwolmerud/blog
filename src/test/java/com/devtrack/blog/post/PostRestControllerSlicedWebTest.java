@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest
-class PostRestControllerWebTest {
+class PostRestControllerSlicedWebTest {
 
     @MockBean
     private PostService postService;
