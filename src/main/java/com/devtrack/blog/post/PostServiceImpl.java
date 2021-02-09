@@ -23,10 +23,10 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll();
     }
 
-    public List<PostEntity> findAllByTitle(String title) throws PostNotFoundException  {
+    public List<PostEntity> findAllByTitle(String title) {
         List<PostEntity> posts = postRepository.findAllByTitle(title);
 
-        if(posts == null || posts.size() == 0) {
+        if (posts == null || posts.size() == 0) {
             log.error("Unable to find post entry in repository with title {}", title);
             throw new PostNotFoundException("Unable to find post entry in repository with title " + title);
         }
@@ -34,9 +34,17 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
-    public PostEntity findById(Long id) throws PostNotFoundException  {
+    public PostEntity findByTitle(String title) {
+        Optional<PostEntity> postEntity = postRepository.findByTitle(title);
+        if (postEntity.isEmpty()) {
+            throw new PostNotFoundException("Unable to find post entry in repository with title " + title);
+        }
+        return postEntity.get();
+    }
+
+    public PostEntity findById(Long id) {
         Optional<PostEntity> postEntity = postRepository.findById(id);
-        if(postEntity.isEmpty()) {
+        if (postEntity.isEmpty()) {
             throw new PostNotFoundException("Unable to find post entry in repository for id " + id);
         }
         return postEntity.get();
@@ -53,9 +61,9 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    public PostEntity update(Long id, String title, String text) throws PostNotFoundException  {
+    public PostEntity update(Long id, String title, String text) throws PostNotFoundException {
         Optional<PostEntity> postEntity = postRepository.findById(id);
-        if(postEntity.isEmpty()) {
+        if (postEntity.isEmpty()) {
             throw new PostNotFoundException("Unable to find post entry in repository for id" + id);
         }
         PostEntity post = PostEntity.builder()
@@ -68,7 +76,7 @@ public class PostServiceImpl implements PostService {
 
     public void delete(Long id) throws ResponseStatusException {
         Optional<PostEntity> postEntity = postRepository.findById(id);
-        if(postEntity.isEmpty()) {
+        if (postEntity.isEmpty()) {
             throw new PostNotFoundException("Unable to find post entry in repository for id" + id);
         }
         postRepository.delete(postEntity.get());

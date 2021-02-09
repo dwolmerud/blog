@@ -1,6 +1,5 @@
 package com.devtrack.blog.post;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,18 +13,14 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class PostRestControllerTest {
 
+    @InjectMocks
+    private PostRestController postRestController;
+
     @Mock
     private PostService postService;
 
     @Mock
     private ModelMapper modelMapper;
-
-    @InjectMocks
-    private PostRestController postRestController;
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void callCreate() {

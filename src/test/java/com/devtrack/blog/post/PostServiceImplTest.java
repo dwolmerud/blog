@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -17,8 +17,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class PostServiceImplTest {
+@ExtendWith(SpringExtension.class)
+public class PostServiceImplTest {
 
     private static final Long POST_ID = 1L;
 
@@ -45,10 +45,11 @@ class PostServiceImplTest {
         when(postRepository.findById(POST_ID)).thenReturn(Optional.of(postEntity));
         assertNotNull(postService.findById(POST_ID));
     }
+
     @Test
     void giveErrorWhenPostNotFound() {
         when(postRepository.findById(POST_ID)).thenThrow(new PostServiceException());
-        assertThrows(PostServiceException.class, ()-> postService.findById(POST_ID));
+        assertThrows(PostServiceException.class, () -> postService.findById(POST_ID));
     }
 
     @Test

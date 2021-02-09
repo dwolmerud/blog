@@ -7,6 +7,8 @@ public interface PostService {
 
      List<PostEntity> findAllByTitle(String title);
 
+     PostEntity findByTitle(String title);
+
      PostEntity findById(Long id);
 
      PostEntity create(PostDTO postDTO);
