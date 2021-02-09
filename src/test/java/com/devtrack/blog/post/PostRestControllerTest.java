@@ -4,13 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 class PostRestControllerTest {
 
     @InjectMocks
@@ -18,9 +17,6 @@ class PostRestControllerTest {
 
     @Mock
     private PostService postService;
-
-    @Mock
-    private ModelMapper modelMapper;
 
     @Test
     void callCreate() {
