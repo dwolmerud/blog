@@ -1,4 +1,7 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.service;
+
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.db.PostEntity;
 
 import java.util.List;
 
@@ -11,7 +14,7 @@ public interface PostService {
 
      PostEntity findById(Long id);
 
-     PostEntity create(PostDTO postDTO);
+     PostEntity create(PostRequest postRequest);
 
      PostEntity update(Long id, String title, String text);
 

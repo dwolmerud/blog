@@ -1,5 +1,11 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.service;
 
+import com.devtrack.blog.post.PostValidator;
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.db.PostEntity;
+import com.devtrack.blog.post.db.PostRepository;
+import com.devtrack.blog.post.service.PostServiceException;
+import com.devtrack.blog.post.service.PostServiceImpl;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,20 +61,20 @@ public class PostServiceImplTest {
 
     @Test
     void doValidateOnCreate() {
-        PostDTO postDTO = createPostDTO();
-        postService.create(postDTO);
-        verify(postValidator).validateOnSaveOrUpdate(postDTO);
+        PostRequest postRequest = createPostDTO();
+        postService.create(postRequest);
+        verify(postValidator).validateOnSaveOrUpdate(postRequest);
     }
 
     @Test
     void doCallSave() {
-        PostDTO postDTO = createPostDTO();
-        postService.create(postDTO);
+        PostRequest postRequest = createPostDTO();
+        postService.create(postRequest);
         verify(postRepository).save(any(PostEntity.class));
     }
 
-    private PostDTO createPostDTO() {
-        return PostDTO.builder()
+    private PostRequest createPostDTO() {
+        return PostRequest.builder()
                 .id(1L)
                 .bodyText("test")
                 .title("title")

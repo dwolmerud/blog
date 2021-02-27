@@ -1,6 +1,9 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.api;
 
 import com.devtrack.blog.BaseIT;
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.db.PostEntity;
+import com.devtrack.blog.post.db.PostRepository;
 import io.restassured.http.ContentType;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,14 +129,14 @@ public class PostRestControllerIT extends BaseIT {
         var mockPosts = createPosts(2);
 
         // Using Rest Assured
-        PostDTO[] response = given()
+        PostRequest[] response = given()
                 .queryParam("title", "post title")
                 .when()
                 .get(createURLWithPort("/posts"))
                 .then()
                 .statusCode(200)
                 .extract()
-                .as(PostDTO[].class);
+                .as(PostRequest[].class);
 
         assertEquals(2, response.length);
         assertEquals(mockPosts.get(0).getTitle(), response[0].getTitle());

@@ -1,5 +1,6 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.db;
 
+import com.devtrack.blog.post.db.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.db;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

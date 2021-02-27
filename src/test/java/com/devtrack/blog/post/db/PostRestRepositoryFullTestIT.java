@@ -1,5 +1,7 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.db;
 
+import com.devtrack.blog.post.db.PostEntity;
+import com.devtrack.blog.post.db.PostRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PostRestControllerFullTestIT {
+public class PostRestRepositoryFullTestIT {
 
     @Autowired
     private MockMvc mockMvc;

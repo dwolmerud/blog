@@ -1,7 +1,12 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.api;
 
+import com.devtrack.blog.common.ErrorResponse;
+import com.devtrack.blog.post.service.PostService;
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.db.PostEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.ErrorMessage;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +31,7 @@ public class PostRestController {
     }
 
     @GetMapping()
-    public Iterable<PostDTO> findAll() {
+    public Iterable<PostRequest> findAll() {
         List<PostEntity> posts = postService.findAll();
 
         return posts.stream()
@@ -35,7 +40,7 @@ public class PostRestController {
     }
 
     @GetMapping(params = "title")
-    public List<PostDTO> findAllByTitle(String title) {
+    public List<PostRequest> findAllByTitle(String title) {
         List<PostEntity> posts;
         try {
             posts = postService.findAllByTitle(title);
@@ -50,9 +55,12 @@ public class PostRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public PostDTO findById(Long id) {
+    public PostRequest findById(Long id) {
         PostEntity post;
         try {
+            if(id == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide correct Post Id");
+            }
             post = postService.findById(id);
         } catch (PostNotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide correct Post Id", ex);
@@ -63,21 +71,21 @@ public class PostRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PostDTO create(@RequestBody @Valid PostDTO postDTO) {
-        return convertToDto(postService.create(postDTO));
+    public PostRequest create(@RequestBody @Valid PostRequest postRequest) {
+        return convertToDto(postService.create(postRequest));
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<PostDTO> update(@PathVariable Long id, String title, String text) {
+    public ResponseEntity<PostRequest> update(@PathVariable Long id, String title, String text) {
         PostEntity post;
         try {
             post = postService.update(id, title, text);
         } catch (PostNotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide correct Post Id", ex);
         }
-        PostDTO postDTO = convertToDto(post);
-        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+        PostRequest postRequest = convertToDto(post);
+        return new ResponseEntity<>(postRequest, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -92,10 +100,10 @@ public class PostRestController {
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
-    private PostDTO convertToDto(PostEntity post) {
+    private PostRequest convertToDto(PostEntity post) {
         if (post == null) {
             return null;
         }
-        return modelMapper.map(post, PostDTO.class);
+        return modelMapper.map(post, PostRequest.class);
     }
 }

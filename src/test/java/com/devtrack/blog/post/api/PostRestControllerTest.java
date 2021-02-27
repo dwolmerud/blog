@@ -1,5 +1,8 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.api;
 
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.api.PostRestController;
+import com.devtrack.blog.post.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,13 +23,13 @@ class PostRestControllerTest {
 
     @Test
     void callCreate() {
-        PostDTO postDTO = createPostDTO();
-        postRestController.create(postDTO);
-        verify(postService, times(1)).create(postDTO);
+        PostRequest postRequest = createPostDTO();
+        postRestController.create(postRequest);
+        verify(postService, times(1)).create(postRequest);
     }
 
-    private PostDTO createPostDTO() {
-        return PostDTO.builder()
+    private PostRequest createPostDTO() {
+        return PostRequest.builder()
                 .id(1L)
                 .bodyText("test")
                 .title("title")

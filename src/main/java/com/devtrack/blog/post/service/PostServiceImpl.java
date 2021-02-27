@@ -1,5 +1,10 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.service;
 
+import com.devtrack.blog.post.api.PostNotFoundException;
+import com.devtrack.blog.post.db.PostRepository;
+import com.devtrack.blog.post.PostValidator;
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.db.PostEntity;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,12 +55,12 @@ public class PostServiceImpl implements PostService {
         return postEntity.get();
     }
 
-    public PostEntity create(PostDTO postDTO) {
-        postValidator.validateOnSaveOrUpdate(postDTO);
+    public PostEntity create(PostRequest postRequest) {
+        postValidator.validateOnSaveOrUpdate(postRequest);
         PostEntity post = PostEntity.builder()
                 .id(1L)
-                .title(postDTO.getTitle())
-                .bodyText(postDTO.getBodyText())
+                .title(postRequest.getTitle())
+                .bodyText(postRequest.getBodyText())
                 .postedAt(Instant.now())
                 .build();
         return postRepository.save(post);

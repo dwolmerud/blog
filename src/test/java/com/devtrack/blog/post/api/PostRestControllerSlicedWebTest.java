@@ -1,5 +1,8 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.api;
 
+import com.devtrack.blog.post.api.model.PostRequest;
+import com.devtrack.blog.post.db.PostEntity;
+import com.devtrack.blog.post.service.PostService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -48,7 +51,7 @@ class PostRestControllerSlicedWebTest {
                 .headerImageUrl("url").build();
         posts.add(post);
         when(postService.findAllByTitle(anyString())).thenReturn(posts);
-        when(modelMapper.map(post, PostDTO.class)).thenReturn(PostDTO.builder()
+        when(modelMapper.map(post, PostRequest.class)).thenReturn(PostRequest.builder()
                 .id(1L)
                 .title("test")
                 .bodyText("text")

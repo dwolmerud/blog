@@ -1,5 +1,7 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.db;
 
+import com.devtrack.blog.post.db.PostEntity;
+import com.devtrack.blog.post.db.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

@@ -1,4 +1,4 @@
-package com.devtrack.blog.post;
+package com.devtrack.blog.post.api.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,7 +13,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class PostDTO {
+public class PostRequest {
     private Long id;
     private String title;
     private String bodyText;
