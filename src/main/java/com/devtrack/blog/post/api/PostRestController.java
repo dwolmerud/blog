@@ -1,6 +1,9 @@
 package com.devtrack.blog.post.api;
 
 import com.devtrack.blog.common.ErrorResponse;
+import com.devtrack.blog.post.api.model.DataPoint;
+import com.devtrack.blog.post.api.model.QueryDataResponse;
+import com.devtrack.blog.post.api.model.QueryRequest;
 import com.devtrack.blog.post.service.PostService;
 import com.devtrack.blog.post.api.model.PostRequest;
 import com.devtrack.blog.post.db.PostEntity;
@@ -14,8 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/posts")
@@ -105,5 +112,19 @@ public class PostRestController {
             return null;
         }
         return modelMapper.map(post, PostRequest.class);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("query")
+    @ResponseStatus(HttpStatus.CREATED)
+    public QueryDataResponse create(@RequestBody @Valid QueryRequest queryRequest) {
+        QueryDataResponse queryDataResponse = new QueryDataResponse();
+        List<DataPoint> dataPoints = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            Random rand = new Random();
+            dataPoints.add(DataPoint.builder().name("banana " + i).x(i).y(i * rand.nextInt(100)).build());
+        }
+        queryDataResponse.setDataPointList(dataPoints);
+        return queryDataResponse;
     }
 }
